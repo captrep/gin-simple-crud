@@ -2,7 +2,7 @@ package mysql
 
 import (
 	"database/sql"
-	"fmt"
+	"log"
 
 	"github.com/captrep/gin-simple-crud/config"
 	_ "github.com/go-sql-driver/mysql"
@@ -11,14 +11,15 @@ import (
 var Mysql *sql.DB
 
 func init() {
-	Mysql, err := sql.Open(config.Conf.DBDriver, config.Conf.DBSource)
+	var err error
+	Mysql, err = sql.Open(config.Conf.DBDriver, config.Conf.DBSource)
 	if err != nil {
-		panic(err)
+		log.Println(err)
 	}
 	errPing := Mysql.Ping()
 	if errPing != nil {
 		panic(errPing)
 	}
 
-	fmt.Println("Database succesfully configured!")
+	log.Println("Database succesfully configured!")
 }
